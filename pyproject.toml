@@ -1,0 +1,16 @@
+[project]
+name = "llm-sport"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "flask>=3.1.0",
+    "gradio>=5.3.0",
+    "openai>=1.57.3",
+    "opencv-python>=4.10.0.84",
+    "pygame>=2.6.1",
+    "python-dotenv>=1.0.1",
+    "requests>=2.32.3",
+    "streamlit>=1.41.1",
+]

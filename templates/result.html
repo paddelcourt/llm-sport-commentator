@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Commentary Result</title>
+    <style>
+        /* Optional: Add some styling */
+        #frame-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        #frame {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Generated Commentary</h1>
+    <p>{{ commentary }}</p>
+    
+    <div id="frame-container">
+        <h2>Latest Frame</h2>
+        <img id="frame" src="{{ url_for('latest_frame') }}" alt="Latest Frame">
+    </div>
+
+    <script>
+        // Function to refresh the frame image
+        function refreshFrame() {
+            var img = document.getElementById('frame');
+            img.src = "{{ url_for('latest_frame') }}" + "?t=" + new Date().getTime();
+        }
+
+        // Refresh the frame every 2 seconds (2000 milliseconds)
+        setInterval(refreshFrame, 2000);
+    </script>
+</body>
+</html>
