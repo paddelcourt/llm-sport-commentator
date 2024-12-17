@@ -8,15 +8,15 @@ To run this software please run:
 
 ```
 python frontend.py
-
 ```
 
-Make sure to also export your openai key to the environemtn
+Make sure to also export your openai key to the environment
 
 ```
 export OPENAI_API_KEY="your_api_key_here"
-
 ```
+
+The prompts for the audio generation and text narration can be changed in [app.py](https://github.com/paddelcourt/llm_sport_commentator/blob/main/app.py)
 
 # Gratitude
 
