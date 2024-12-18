@@ -1,16 +1,12 @@
 # frontend.py
 
-from flask import Flask, request, render_template, send_from_directory
+from flask import Flask, request, render_template, send_from_directory, make_response
 import os
 import threading
 import logging
 from werkzeug.utils import secure_filename
-from pydub import AudioSegment
-from pydub.playback import play
-import base64
-import time
-import io
 from app import analysis_thread, video_thread
+from video import frame_lock  # Import the frame_lock from video.py
 
 app = Flask(__name__)
 UPLOAD_FOLDER = 'uploads'
@@ -30,8 +26,6 @@ def allowed_file(filename):
     ALLOWED_EXTENSIONS = {'mp4', 'avi', 'mov', 'mkv'}
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 
 def main_processing(filepath):
     # Start video processing thread
@@ -79,19 +73,14 @@ def latest_frame():
     frame_path = os.path.join(FRAMES_FOLDER, 'frame.jpg')
     if os.path.exists(frame_path):
         logging.debug(f"Serving latest frame: {frame_path}")
-        return send_from_directory(FRAMES_FOLDER, 'frame.jpg')
+        with frame_lock:
+            response = make_response(send_from_directory(FRAMES_FOLDER, 'frame.jpg'))
+            # Set headers to prevent caching
+            response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+            response.headers['Pragma'] = 'no-cache'
+            return response
     else:
         logging.warning(f"Frame not found: {frame_path}")
-        return '', 204  # No Content
-
-@app.route('/sound/<filename>')
-def serve_sound(filename):
-    sound_path = os.path.join(SOUND_FOLDER, filename)
-    if os.path.exists(sound_path):
-        logging.debug(f"Serving sound file: {sound_path}")
-        return send_from_directory(SOUND_FOLDER, filename)
-    else:
-        logging.warning(f"Sound file not found: {sound_path}")
         return '', 204  # No Content
 
 if __name__ == '__main__':

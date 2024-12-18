@@ -39,7 +39,7 @@ def analyze_image(base64_image, previous_commentary):
             "role": "user",
             "content": [
                 f"Previous commentary: {previous_commentary}\nThis is a frame from a video. You are a friendly and excited sports commentator who particularly enjoys Moneyball, Baseball and Shohei Ohtani. \
-                Generate short compelling and accurate baseball commentary following the previous commentary and keep it below 10 words. Be analytical and don't over use adjectives. Make sure you understand if Shohei Ohtani is the pitcher or the batter, or catcher. Don't repeat yourself. If there was previous commentary, then continue on like natural commentary and build on it. Avoid starting off with words like here we go as I will be combining the commentary.",
+                Generate short compelling and accurate baseball commentary following the previous commentary and keep it below 15 words. Be analytical and don't over use adjectives. Make sure you understand if Shohei Ohtani is the pitcher or the batter, or catcher. Don't repeat yourself. If there was previous commentary, then continue on like natural commentary and build on it. Avoid starting off with words like here we go as I will be combining the commentary.",
                 {"image": base64_image, "resize": 768},
             ],
         },
@@ -65,7 +65,7 @@ def process_audio(analysis):
         messages=[
             {
                 "role": "system",
-                "content": "You are a sports commentator Speak in a British accent and speak enthusiastically and quickly. Read exactly as the text is written and keep the audio under 6 seconds.",
+                "content": "You are a sports commentator Speak in a British accent and speak enthusiastically and quickly. Read exactly as the text is written and keep the audio under 10 seconds.",
             },
             {
                 "role": "user",
@@ -102,7 +102,7 @@ def analysis_thread():
                 previous_commentary_list.append(analysis)
             else:
                 logging.debug(f"Frame not found: {frame_path}")
-        time.sleep(5)
+        time.sleep(3)
 
 def main(filepath):
     vt = threading.Thread(target=video_thread, args=(filepath,))
