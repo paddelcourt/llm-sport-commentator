@@ -77,9 +77,7 @@ gitpython==3.1.43
     # via
     #   -r requirements.txt
     #   streamlit
-gradio==5.9.0
     # via -r requirements.txt
-gradio-client==1.5.2
     # via
     #   -r requirements.txt
     #   gradio
