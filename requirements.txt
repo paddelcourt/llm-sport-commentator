@@ -81,7 +81,7 @@ gitpython==3.1.43
     # via
     #   -r requirements.txt
     #   gradio
-h11==0.14.0
+h11==0.15.0.
     # via
     #   -r requirements.txt
     #   httpcore
